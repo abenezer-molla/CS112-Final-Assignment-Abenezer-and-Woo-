@@ -60,4 +60,69 @@ ml12 <- lmer(data=WVSData, individualres ~ zone + educ + income + village )
     title="Multilevel Regression Results: Frontier Zones and Civic Institutions(with less independent variables)", 
     align=TRUE,column.sep.width = "-18pt"
     )
+    
+    
+    
+    
+ # Extension section
+ 
+ 
+ 
+ # genetic matching consists of several steps. The first step is to run GenMatch. Second, use GenMatch output in Match. Third, check the balance with MatchBalance().
+ # Last, estimate the treatment effect. 
+ 
+ 
+ 
+ # first, we want to transform educ or normalize it and add to dataset. 
+ 
+ WVSDataScaled_educ <- scale(WVSData$educ)[, -1]
+ 
+ 
+ # then we will be getting the mean and standard deviation to check weather the data was scaled properly.
+ 
+ mean(  WVSDataScaled_educ d)
+ sd(  WVSDataScaled_educ )
+ 
+ # combine zone + income + village and  WVSDataScaled_educ to match on them. 
+ 
+ X <-  cbind(WVSDataScaled_educ, WVSData$income, WVSData$zone, WVSData$village)
+ 
+ #define the treatment varibale
+ 
+ Tr <- WVSData$
+ 
+ #genetic matching
+ 
+ library(Matching)
+ 
+ genMatchingOutput <- GenMatch(Tr = Tr, X =X, replace = TRUE, caliper = c(0.01, 1000))
+ 
+ # the next step will be running the Match function to make sure that the parameters are the same. 
+ 
+ MatchingOutput <- Match(Tr = Tr, X= X, replace = TRUE, caliper = c(0.01, 1000), Weight.matrix = genMatchingOutput)
+ 
+ # then check the balance
+ 
+ BalanceCheck <- MatchBalance([treatmentVaribale] ~ zone + WVSDataScaled_educ + income + village, data = WVSData, match.out = MatchingOutput, nboots = 500)
+ 
+ # then we will be estimating the treatment effect by specifying the outcome variable
+ 
+ MatchingOutput <- Match(Y = WVSData$[outcomeVariableToBeInserted], Tr = Tr, X = X, replace  = TRUE, caliper = c(0.01, 1000), Weight.matrix = genMatchingOutput)
+ 
+ # time to look at the estimate of treatment effect
+ 
+  MatchingOutput$est
+  
+  
+  # then let's look at the standard error of treatment effect
+  
+   MatchingOutput$se
+   
+   
+ 
+ 
+ 
+ 
+ 
+ 
 
