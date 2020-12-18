@@ -1,0 +1,63 @@
+
+## Regression Set 1 (Table 2)
+
+attach(WVSData)
+
+library(lme4)
+library(car)
+library(arm)
+
+
+ml1 <- lmer(data=WVSData, trust  ~ zone + age + sex+ year + educ + income + village  + GDPcap0708k + imort + fract + ( 1 | year:countrycode ) -1 )
+
+ml2 <- lmer(data=WVSData, race  ~ zone + age + sex+ year + educ + income + village + GDPcap0708k + imort + fract + ( 1 | year:countrycode  ) - 1 )
+
+ml3 <- lmer(data=WVSData, immigrant  ~ zone + age + sex+ year + educ + income + village  + GDPcap0708k + imort + fract + ( 1 | year:countrycode  ) - 1 )
+
+ml4 <- lmer(data=WVSData, civic_1  ~ zone + age + sex+ year + educ + income + village + GDPcap0708k + imort + fract + ( 1 | year:countrycode  ) - 1 )
+
+ml5 <- lmer(data=WVSData, voluntary  ~ zone + age + sex+ year + educ + income + village + GDPcap0708k + imort + fract + ( 1 | year:countrycode  )  - 1 )
+
+ml6 <- lmer(data=WVSData, individualres  ~ zone + age + sex + year + educ + income + village + GDPcap0708k + imort + fract + ( 1 | year:countrycode  ) -1  )
+
+
+
+## making the output table
+
+library(stargazer) 
+
+  stargazer(ml1, ml2, ml3, ml4, ml5, ml6,
+    title="Multilevel Regression Results: Frontier Zones and Civic Institutions", 
+    align=TRUE,column.sep.width = "-18pt"
+    )
+
+
+#(above : replicating the exact table)
+
+
+#(below: replicating with less variables)
+
+
+## Regression Set 2
+
+ml7 <- lmer(data=WVSData, trust  ~ zone + educ + income + village )
+
+ml8 <- lmer(data=WVSData, race  ~zone + educ + income + village )
+
+ml9 <- lmer(data=WVSData, immigrant ~ zone + educ + income + village )
+
+ml10 <- lmer(data=WVSData, civic_1  ~ zone + educ + income + village )
+
+ml11 <- lmer(data=WVSData, voluntary  ~ zone + educ + income + village )
+
+ml12 <- lmer(data=WVSData, individualres ~ zone + educ + income + village )
+
+
+
+## making the output table
+
+  stargazer(ml7, ml8, ml9, ml10, ml11, ml12,
+    title="Multilevel Regression Results: Frontier Zones and Civic Institutions(with less independent variables)", 
+    align=TRUE,column.sep.width = "-18pt"
+    )
+
