@@ -83,13 +83,13 @@ ml12 <- lmer(data=WVSData, individualres ~ zone + educ + income + village )
  mean(  WVSDataScaled_educ d)
  sd(  WVSDataScaled_educ )
  
- # combine zone + income + village and  WVSDataScaled_educ to match on them. 
+ # combine income + village and  WVSDataScaled_educ to match on them. 
  
  X <-  cbind(WVSDataScaled_educ, WVSData$income, WVSData$zone, WVSData$village)
  
- #define the treatment varibale
+ #define the treatment variable
  
- Tr <- WVSData$
+ Tr <- WVSData$zone
  
  #genetic matching
  
@@ -103,7 +103,7 @@ ml12 <- lmer(data=WVSData, individualres ~ zone + educ + income + village )
  
  # then check the balance
  
- BalanceCheck <- MatchBalance([treatmentVaribale] ~ zone + WVSDataScaled_educ + income + village, data = WVSData, match.out = MatchingOutput, nboots = 500)
+ BalanceCheck <- MatchBalance(zone ~ WVSDataScaled_educ + income + village, data = WVSData, match.out = MatchingOutput, nboots = 500)
  
  # then we will be estimating the treatment effect by specifying the outcome variable
  
